@@ -1,6 +1,6 @@
 #!/bin/bash
-sudo apt update
-#sudo apt upgrade
+sudo apt -y update
+sudo apt -y upgrade
 sudo apt install -y zip
 # Install Nginx
 sudo apt install -y nginx
@@ -155,6 +155,7 @@ EOF
 sudo rm /etc/nginx/nginx.conf
 sudo mv nginx.conf /etc/nginx/nginx.conf
 sudo chown $USER:$USER /etc/nginx/nginx.conf
+sudo nginx -t
 sudo nginx -s reload
 
 # 讓預設的 Nginx 能夠執行 PHP
@@ -164,7 +165,6 @@ server {
         listen [::]:80 ;
         root /var/www/$1;
         index index.html index.htm index.php;
-        server_name _; 
         server_name $1;
         location / {                
                 try_files \$uri \$uri/ /index.php?\$args;
@@ -217,9 +217,9 @@ sudo mv $1.conf /etc/nginx/sites-available/
 sudo rm -rf /var/www/html/
 sudo mkdir /var/www/$1/
 sudo chown www-data:www-data /var/www/$1/
-sudo chown -R $USER:$USER /etc/nginx/sites-available/$1.conf
+sudo chown $USER:$USER /etc/nginx/sites-available/$1.conf
 sudo mv phpinfo.php /var/www/$1/
-sudo chown -R www-data:www-data /var/www/$1/
+sudo chown -R $USER:$USER /var/www/$1/
 sudo ln -s /etc/nginx/sites-available/$1.conf /etc/nginx/sites-enabled/
 sudo mv ip_to_dns.conf /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/ip_to_dns.conf /etc/nginx/sites-enabled/
