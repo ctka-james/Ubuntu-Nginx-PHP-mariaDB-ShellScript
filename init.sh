@@ -41,10 +41,9 @@ server {
         index index.html index.htm index.php;
         server_name db.$1;
         location / {
-                
-                try_files \$uri \$uri/ /index.php?\$args;
-                allow $2;
-                deny all;
+            try_files \$uri \$uri/ /index.php?\$args;
+            allow $2;
+            deny all;
         }
         location ~ \.php$ {
             # 執行 ip 總數連線
@@ -78,7 +77,7 @@ events {
 
 http {
 	# 觸發條件，限制 ip 每秒 10 個 request
-	limit_req_zone \$binary_remote_addr zone=one:10m rate=10r/s;
+	# limit_req_zone \$binary_remote_addr zone=one:10m rate=10r/s;
 
 	##
 	# Basic Settings
@@ -166,18 +165,33 @@ server {
         root /var/www/$1;
         index index.html index.htm index.php;
         server_name $1;
+        client_max_body_size 50m;
+        charset utf-8;
         location / {                
                 try_files \$uri \$uri/ /index.php?\$args;
         }
         location ~ \.php$ {
             # 執行 ip 總數連線
-			limit_req zone=one burst=5 nodelay;
+			# limit_req zone=one burst=5 nodelay;
             include snippets/fastcgi-php.conf;
             fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         #
         #   # With php-fpm (or other unix sockets):
             include /etc/nginx/fastcgi_params;
             fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        }
+        access_log /var/log/nginx/$1-access.log;
+        error_log /var/log/nginx/$1-error.log;
+        #
+        #   # 加速 Nginx 讀取檔案速度
+        sendfile on;
+        #
+        #   # 關閉 Nginx 版本訊息
+        server_tokens off;
+        #   
+        #   # 拒絕無法解析的 request 
+        location ~ /\.ht {
+            deny all;
         } 
 }
 EOF
