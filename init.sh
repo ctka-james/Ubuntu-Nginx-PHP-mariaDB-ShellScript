@@ -47,7 +47,7 @@ server {
         }
         location ~ \.php$ {
             # 執行 ip 總數連線
-			limit_req zone=one burst=5 nodelay;
+			# limit_req zone=one burst=5 nodelay;
             include snippets/fastcgi-php.conf;
             fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         #
