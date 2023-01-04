@@ -228,7 +228,6 @@ sudo ln -s /etc/nginx/sites-available/ip_to_dns.conf /etc/nginx/sites-enabled/
 wget https://wordpress.org/latest.zip
 unzip latest.zip
 sudo mv wordpress/* /var/www/$1
-sudo chmod -R +x /var/www/$1
 sudo chown -R www-data:www-data /var/www/$1
 rm -R wordpress/
 rm latest.zip
@@ -245,7 +244,7 @@ echo "\n"
 echo "\n"
 echo "Ubuntu Nginx PHP MariaDB WordPress 環境已建製完成!!"
 echo "\n"
-echo "請連結到："
+echo "目前僅 $2 可以連結到："
 echo "http://db.$1"
 echo "新增 WordPress 資料庫"
 echo "\n"
