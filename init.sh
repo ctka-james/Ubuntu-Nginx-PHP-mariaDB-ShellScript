@@ -16,12 +16,12 @@ sudo ufw allow 'SSH'
 sudo ufw allow 22/tcp
 sudo ufw reload
 # install PHP
-sudo apt-get install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl
+sudo apt install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl
 # install imagick
 sudo apt install -y php8.1-imagick
 sudo systemctl restart nginx php8.1-fpm.service
 # install MariaDB
-sudo apt-get install -y mariadb-server
+sudo apt install -y mariadb-server
 sudo systemctl enable --now mariadb
 sudo mysql_secure_installation
 # install phpMyAdmin
