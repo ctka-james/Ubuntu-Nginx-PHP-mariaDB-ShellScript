@@ -1,10 +1,15 @@
 #!/bin/bash
 sudo apt -y update
 sudo apt -y upgrade
+sudo apt install -y software-properties-common
 sudo apt install -y zip
+
 # Install Nginx
 sudo apt install -y nginx
 sudo systemctl enable --now nginx
+sudo systemctl status nginx
+sudo sleep 3s
+
 # firewall 設定
 sudo service ufw start
 sudo service ufw enable
@@ -15,15 +20,33 @@ sudo ufw allow 443/tcp
 sudo ufw allow 'SSH'
 sudo ufw allow 22/tcp
 sudo ufw reload
+sudo systemctl status ufw
+sudo sleep 3s
+
 # install PHP
 sudo apt install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl
+
 # install imagick
 sudo apt install -y php8.1-imagick
 sudo systemctl restart nginx php8.1-fpm.service
+sudo systemctl enable php8.1-fpm.service
+sudo systemctl status php8.1-fpm.service
+sudo sleep 3s
+
+# install LetsEncrypt SSL certbot
+sudo apt install -y certbot python3-certbot-nginx
+sudo systemctl start certbot.timer
+sudo systemctl enable certbot.timer
+sudo systemctl status certbot.timer
+sudo sleep 3s
+
 # install MariaDB
 sudo apt install -y mariadb-server
 sudo systemctl enable --now mariadb
+sudo systemctl status mariadb
+sudo sleep 3s
 sudo mysql_secure_installation
+
 # install phpMyAdmin
 wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
 sudo unzip phpMyAdmin-5.2.0-all-languages.zip
@@ -54,6 +77,19 @@ server {
         #   # With php-fpm (or other unix sockets):
             include /etc/nginx/fastcgi_params;
             fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        }
+        access_log /var/log/nginx/phpMyAdmin-access.log;
+        error_log /var/log/nginx/phpMyAdmin-error.log;
+        #
+        #   # 加速 Nginx 讀取檔案速度
+        sendfile on;
+        #
+        #   # 關閉 Nginx 版本訊息
+        server_tokens off;
+        #   
+        #   # 拒絕無法解析的 request 
+        location ~ /\.ht {
+            deny all;
         } 
 }
 EOF
