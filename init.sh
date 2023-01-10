@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt -y update
-sudo apt -y upgrade
-sudo apt install -y software-properties-common
+#sudo apt -y upgrade
+#sudo apt install -y software-properties-common
 sudo apt install -y zip
 sudo apt install -y net-tools
 
