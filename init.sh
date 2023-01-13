@@ -63,11 +63,11 @@ server {
         listen [::]:80;
         root /var/www/phpMyAdmin;
         index index.html index.htm index.php;
-        server_name db.$1;
+        server_name phpmyadmin.$1;
         location / {
             try_files \$uri \$uri/ /index.php?\$args;
-            allow $2;
-            deny all;
+            allow all;
+            # deny all;
         }
         location ~ \.php$ {
             # 執行 ip 總數連線
@@ -233,7 +233,7 @@ server {
 }
 EOF
 
-cat << EOF > phpinfo.php
+cat << EOF > index.php
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -246,7 +246,7 @@ cat << EOF > phpinfo.php
     <h1>網站的 Domain Name：$1</h1>
     <h1>網站目錄：/var/www/$1/</h1>
     <h1>$1 的 nginx 設定檔：/etc/nginx/sites-available/$1.conf</h1>
-    <h1><a href="http://db.$1" target="_blank">資料庫管理介面 phpMyAdmin</a></h1>
+    <h1><a href="http://phpmyadmin.$1" target="_blank">資料庫管理介面 phpMyAdmin</a></h1>
     <?php
     phpinfo();
     ?>
@@ -267,6 +267,7 @@ sudo rm /etc/nginx/sites-enabled/default
 sudo mv $1.conf /etc/nginx/sites-available/
 sudo rm -rf /var/www/html/
 sudo mkdir /var/www/$1/
+sudo mv index.php /var/www/$1
 sudo chown www-data:www-data /var/www/$1/
 sudo chown $USER:$USER /etc/nginx/sites-available/$1.conf
 sudo mv phpinfo.php /var/www/$1/
@@ -275,31 +276,34 @@ sudo ln -s /etc/nginx/sites-available/$1.conf /etc/nginx/sites-enabled/
 sudo mv ip_to_dns.conf /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/ip_to_dns.conf /etc/nginx/sites-enabled/
 
-# install WordPress
-wget https://wordpress.org/latest.zip
-unzip latest.zip
-sudo mv wordpress/* /var/www/$1
-sudo chown -R www-data:www-data /var/www/$1
-rm -R wordpress/
-rm latest.zip
+# # install WordPress
+# wget https://wordpress.org/latest.zip
+# unzip latest.zip
+# sudo mv wordpress/* /var/www/$1
+# sudo chown -R www-data:www-data /var/www/$1
+# rm -R wordpress/
+# rm latest.zip
 
 # reload Nginx
 sudo nginx -t
+sudo sleep 3s
 sudo nginx -s reload
+sudo chown www-data:adm /var/log/nginx/$1-access.log
+sudo chown www-data:adm /var/log/nginx/$1-error.log
 
-# delete phpinfo.php
-sudo rm /var/www/$1/phpinfo.php
+# # delete phpinfo.php
+# sudo rm /var/www/$1/phpinfo.php
 
 # Print finish info
 echo "\n"
+echo "Ubuntu Nginx PHP MariaDB Certbot 環境已建製完成!!"
 echo "\n"
-echo "Ubuntu Nginx PHP MariaDB WordPress 環境已建製完成!!"
+echo "網址："
+echo "http://$1"
 echo "\n"
-echo "目前僅 $2 可以連結到："
-echo "http://db.$1"
-echo "新增 WordPress 資料庫"
+echo "新增資料庫可以連結到：(並將此網址加入書籤)"
+echo "http://phpmyadmin.$1"
 echo "\n"
+echo "完成後請務必刪除 init.sh 並執行 \$ sh off_phpMyAdmin.sh"
 echo "\n"
-echo "WordPress安裝完成後請務必刪除 init.sh"
-echo "\n"
-echo "\n"
+echo "重新開啟 phpMyAdmin 請執行 \$ sh on_phpMyAdmin.sh"

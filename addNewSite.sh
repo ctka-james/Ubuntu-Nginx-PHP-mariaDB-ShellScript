@@ -69,6 +69,8 @@ sudo ln -s /etc/nginx/sites-available/$1.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo sleep 3s
 sudo nginx -s reload
+sudo chown www-data:adm /var/log/nginx/$1-access.log
+sudo chown www-data:adm /var/log/nginx/$1-error.log
 
 echo "\n"
 echo "新網站 $1 已建置完成"
