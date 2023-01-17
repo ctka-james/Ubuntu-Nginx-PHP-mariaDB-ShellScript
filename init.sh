@@ -1,5 +1,7 @@
 #!/bin/bash
 # clean cache and lock
+sudo lsb_release -a
+sudo sleep 5s
 sudo rm /var/lib/dpkg/lock-frontend
 sudo rm /var/lib/dpkg/lock
 sudo rm /var/cache/apt/archives/lock
