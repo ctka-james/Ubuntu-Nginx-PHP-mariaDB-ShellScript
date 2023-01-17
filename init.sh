@@ -253,6 +253,8 @@ cat << EOF > index.php
     <h1>網站目錄：/var/www/$1/</h1>
     <h1>$1 的 nginx 設定檔：/etc/nginx/sites-available/$1.conf</h1>
     <h1><a href="http://phpmyadmin.$1" target="_blank">資料庫管理介面 phpMyAdmin</a></h1>
+    <p>為 $1 加入 LetsEncrypt SSL</p>
+    <p>$ sh certbot.sh $1 YOUR_EMAIL</p>
     <?php
     phpinfo();
     ?>
