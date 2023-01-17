@@ -1,4 +1,8 @@
 #!/bin/bash
+# clean cache and lock
+sudo rm /var/lib/dpkg/lock-frontend
+sudo rm /var/lib/dpkg/lock
+sudo rm /var/cache/apt/archives/lock
 sudo apt -y update
 #sudo apt -y upgrade
 #sudo apt install -y software-properties-common
