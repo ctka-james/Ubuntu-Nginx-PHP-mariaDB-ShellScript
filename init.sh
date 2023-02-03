@@ -20,8 +20,7 @@ sudo sleep 3s
 # Install Rsync Server
 sudo apt install -y rsync
 sudo mkdir /var/log/rsync
-sudo touch /home/$USER/rsync.secret
-sudo cat << EOF > /etc/rsyncd.conf
+sudo cat << EOF > rsyncd.conf
 uid = $USER     
 gid = $USER    
 use chroot = yes   
@@ -48,14 +47,14 @@ dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
     secrets file = /home/$USER/rsync.secret   
     log file = /var/log/rsync/phpMyAdmin.log    
 EOF
-sudo chmod 600 /home/$USER/rsync.secret
-sudo cat << EOF > /home/$USER/rsync.secret
+sudo mv rsyncd.conf /etc/rsyncd.conf
+sudo cat << EOF > rsync.secret
 $USER:your passwd
 EOF
+sudo mv rsync.secret /home/$USER/rsync.secret
+sudo chmod 600 /home/$USER/rsync.secret
 sudo systemctl start rsync
 sudo systemctl enable rsync
-sudo systemctl status rsync
-sudo sleep 3s
 
 # firewall 設定
 sudo service ufw start
@@ -104,6 +103,7 @@ sudo mv phpMyAdmin-5.2.0-all-languages/ /var/www/phpMyAdmin
 sudo chmod -R +x /var/www/phpMyAdmin
 sudo mkdir /var/www/phpMyAdmin/tmp
 sudo chmod 777 /var/www/phpMyAdmin/tmp
+sudo chown -R $USER:$USER /var/www/phpMyAdmin
 sudo rm phpMyAdmin-5.2.0-all-languages.zip
 # setup phpMyAdmin.conf file
 cat << EOF > phpMyAdmin.conf
