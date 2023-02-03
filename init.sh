@@ -48,6 +48,7 @@ dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
     log file = /var/log/rsync/phpMyAdmin.log    
 EOF
 sudo mv rsyncd.conf /etc/rsyncd.conf
+sudo chown $USER:$USER /etc/rsyncd.conf
 sudo cat << EOF > rsync.secret
 $USER:your passwd
 EOF
