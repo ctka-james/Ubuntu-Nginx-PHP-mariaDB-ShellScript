@@ -17,6 +17,46 @@ sudo systemctl enable --now nginx
 sudo systemctl status nginx
 sudo sleep 3s
 
+# Install Rsync Server
+sudo apt install -y rsync
+sudo mkdir /var/log/rsync
+sudo touch /home/$USER/rsync.secret
+sudo cat << EOF > /etc/rsyncd.conf
+uid = $USER     
+gid = $USER    
+use chroot = yes   
+max connections = 4   
+log file=/var/log/rsync/rsyncd.log  
+pid file = /var/run/rsyncd.pid  
+exclude = lost+found/  
+transfer logging = yes   
+timeout = 900    
+ignore nonreadable = yes   
+dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2  
+[$1] 
+	path = /var/www/$1    
+    comment = $1 website backup    
+    read only = no     
+    auth users = $USER    
+    secrets file = /home/$USER/rsync.secret   
+    log file = /var/log/rsync/$1.log
+[phpMyAdmin]
+    path = /var/www/phpMyAdmin    
+    comment = phpMyAdmin backup    
+    read only = no     
+    auth users = $USER    
+    secrets file = /home/$USER/rsync.secret   
+    log file = /var/log/rsync/phpMyAdmin.log    
+EOF
+sudo chmod 600 /home/$USER/rsync.secret
+sudo cat << EOF > /home/$USER/rsync.secret
+$USER:your passwd
+EOF
+sudo systemctl start rsync
+sudo systemctl enable rsync
+sudo systemctl status rsync
+sudo sleep 3s
+
 # firewall 設定
 sudo service ufw start
 sudo service ufw enable
@@ -26,6 +66,7 @@ sudo ufw allow 'Nginx HTTPS'
 sudo ufw allow 443/tcp
 #sudo ufw allow 'SSH'
 sudo ufw allow 22/tcp
+sudo ufw allow 873/tcp
 sudo ufw enable
 sudo ufw reload
 sudo ufw status
