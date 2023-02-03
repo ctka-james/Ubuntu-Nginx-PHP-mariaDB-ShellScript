@@ -54,6 +54,7 @@ $USER:your passwd
 EOF
 sudo mv rsync.secret /home/$USER/rsync.secret
 sudo chmod 600 /home/$USER/rsync.secret
+sudo chown root:root /home/$USER/rsync.secret
 sudo systemctl start rsync
 sudo systemctl enable rsync
 
