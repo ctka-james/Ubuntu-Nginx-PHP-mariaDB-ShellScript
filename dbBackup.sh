@@ -1,0 +1,1 @@
+mysqldump -u root -p --opt $1 > $1.sql
