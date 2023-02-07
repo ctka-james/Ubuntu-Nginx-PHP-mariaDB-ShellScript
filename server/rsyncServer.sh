@@ -39,7 +39,7 @@ dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
     hosts deny = *     
     auth users = $USER    
     secrets file = /home/$USER/rsync.secret   
-    log file = /var/log/rsync/phpMyAdmin.log    
+    log file = /var/log/rsync/dbBackup.log    
 EOF
 sudo mv rsyncd.conf /etc/rsyncd.conf
 sudo chown $USER:$USER /etc/rsyncd.conf
