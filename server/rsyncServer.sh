@@ -55,4 +55,10 @@ sudo ufw allow 873/tcp
 sudo ufw reload
 sudo systemctl restart rsync
 mkdir /home/$USER/dbBackup/
+# crontab allow user
+sudo cat << EOF > cron.allow
+$USER
+EOF
+sudo mv cron.allow /etc/cron.allow
+sudo service cron reload
 echo "rsync server 遠端同步已安裝完成 \n 請於 /home/$USER/rsync.secret 設定連線密碼，權限必須為root \n rsync server 設定檔：/etc/rsyncd.conf"
