@@ -1,0 +1,4 @@
+# 資料庫回復
+# sh off_chownWP.sh
+mysqladmin -u Username -p create DatabaseName
+mysql -u Username -p DatabaseName < Backup.sql
