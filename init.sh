@@ -50,6 +50,18 @@ sudo systemctl enable certbot.timer
 sudo systemctl status certbot.timer
 sudo sleep 3s
 
+# install atd.service
+sudo apt install -y at
+sudo systemctl start atd.service
+sudo systemctl enable atd.service
+sudo cat << EOF > at.allow
+$USER
+EOF
+sudo mv at.allow /etc/at.allow
+sudo systemctl restart atd.service
+sudo systemctl status atd.service
+sudo sleep 3s
+
 # install MariaDB
 sudo apt install -y mariadb-server
 sudo systemctl enable --now mariadb
@@ -152,7 +164,7 @@ http {
 	# Logging Settings
 	##
 
-	access_log /var/log/nginx/access.log;
+	# access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
 
 	##
@@ -227,7 +239,7 @@ server {
             include /etc/nginx/fastcgi_params;
             fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
         }
-        access_log /var/log/nginx/$1-access.log;
+        # access_log /var/log/nginx/$1-access.log;
         error_log /var/log/nginx/$1-error.log;
         #
         #   # 加速 Nginx 讀取檔案速度
@@ -305,6 +317,7 @@ sudo chown www-data:adm /var/log/nginx/$1-error.log
 
 # # delete phpinfo.php
 # sudo rm /var/www/$1/phpinfo.php
+sudo apt remove unattended-upgrades
 
 # Print finish info
 echo "\n"
