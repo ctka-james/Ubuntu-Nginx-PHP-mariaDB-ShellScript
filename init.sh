@@ -17,47 +17,6 @@ sudo systemctl enable --now nginx
 sudo systemctl status nginx
 sudo sleep 3s
 
-# Install Rsync Server
-# sudo apt install -y rsync
-# sudo mkdir /var/log/rsync
-# sudo cat << EOF > rsyncd.conf
-# uid = $USER     
-# gid = $USER    
-# use chroot = yes   
-# max connections = 4   
-# log file=/var/log/rsync/rsyncd.log  
-# pid file = /var/run/rsyncd.pid  
-# exclude = lost+found/  
-# transfer logging = yes   
-# timeout = 900    
-# ignore nonreadable = yes   
-# dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2  
-# [$1] 
-# 	path = /var/www/$1    
-#     comment = $1 website backup    
-#     read only = no     
-#     auth users = $USER    
-#     secrets file = /home/$USER/rsync.secret   
-#     log file = /var/log/rsync/$1.log
-# [phpMyAdmin]
-#     path = /var/www/phpMyAdmin    
-#     comment = phpMyAdmin backup    
-#     read only = no     
-#     auth users = $USER    
-#     secrets file = /home/$USER/rsync.secret   
-#     log file = /var/log/rsync/phpMyAdmin.log    
-# EOF
-# sudo mv rsyncd.conf /etc/rsyncd.conf
-# sudo chown $USER:$USER /etc/rsyncd.conf
-# sudo cat << EOF > rsync.secret
-# $USER:your passwd
-# EOF
-# sudo mv rsync.secret /home/$USER/rsync.secret
-# sudo chmod 600 /home/$USER/rsync.secret
-# sudo chown root:root /home/$USER/rsync.secret
-# sudo systemctl start rsync
-# sudo systemctl enable rsync
-
 # firewall 設定
 sudo service ufw start
 sudo service ufw enable
@@ -89,6 +48,18 @@ sudo apt install -y certbot python3-certbot-nginx
 sudo systemctl start certbot.timer
 sudo systemctl enable certbot.timer
 sudo systemctl status certbot.timer
+sudo sleep 3s
+
+# install atd.service
+sudo apt install -y at
+sudo systemctl start atd.service
+sudo systemctl enable atd.service
+sudo cat << EOF > at.allow
+$USER
+EOF
+sudo mv at.allow /etc/at.allow
+sudo systemctl restart atd.service
+sudo systemctl status atd.service
 sudo sleep 3s
 
 # install MariaDB
@@ -193,7 +164,7 @@ http {
 	# Logging Settings
 	##
 
-	access_log /var/log/nginx/access.log;
+	# access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
 
 	##
@@ -268,7 +239,7 @@ server {
             include /etc/nginx/fastcgi_params;
             fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
         }
-        access_log /var/log/nginx/$1-access.log;
+        # access_log /var/log/nginx/$1-access.log;
         error_log /var/log/nginx/$1-error.log;
         #
         #   # 加速 Nginx 讀取檔案速度
@@ -346,6 +317,7 @@ sudo chown www-data:adm /var/log/nginx/$1-error.log
 
 # # delete phpinfo.php
 # sudo rm /var/www/$1/phpinfo.php
+sudo apt remove unattended-upgrades
 
 # Print finish info
 echo "\n"
