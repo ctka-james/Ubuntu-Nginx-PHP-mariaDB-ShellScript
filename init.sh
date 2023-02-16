@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo timedatectl set-timezone Asia/Taipei
 # clean cache and lock
 sudo lsb_release -a
 sudo sleep 5s
