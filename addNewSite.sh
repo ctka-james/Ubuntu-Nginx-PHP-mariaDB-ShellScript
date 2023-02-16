@@ -22,7 +22,7 @@ server {
             include /etc/nginx/fastcgi_params;
             fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
         }
-        access_log /var/log/nginx/$1-access.log;
+        # access_log /var/log/nginx/$1-access.log;
         error_log /var/log/nginx/$1-error.log;
         #
         #   # 加速 Nginx 讀取檔案速度

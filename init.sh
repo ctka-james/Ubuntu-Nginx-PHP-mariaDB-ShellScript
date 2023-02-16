@@ -69,6 +69,9 @@ sudo systemctl status mariadb
 sudo sleep 3s
 sudo mysql_secure_installation
 
+# install plocate
+sudo apt install -y plocate
+
 # install phpMyAdmin
 wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
 sudo unzip phpMyAdmin-5.2.0-all-languages.zip
@@ -138,6 +141,9 @@ http {
 	# 觸發條件，限制 ip 每秒 10 個 request
 	# limit_req_zone \$binary_remote_addr zone=one:10m rate=10r/s;
 
+    # 檔案最大上傳
+    client_max_body_size 20m;
+
 	##
 	# Basic Settings
 	##
@@ -165,7 +171,7 @@ http {
 	##
 
 	# access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
+	# error_log /var/log/nginx/error.log;
 
 	##
 	# Gzip Settings
