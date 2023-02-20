@@ -326,6 +326,31 @@ sudo chown www-data:adm /var/log/nginx/$1-error.log
 # sudo rm /var/www/$1/phpinfo.php
 sudo apt remove unattended-upgrades
 
+# install fail2ban
+sudo apt install -y fail2ban
+sudo systemctl status fail2ban.service
+sudo sleep 3s
+# 啟動
+#sudo systemctl start fail2ban.service
+# 開機時啟動
+#sudo systemctl enable fail2ban.service
+# 查看狀態
+#sudo systemctl status fail2ban.service
+# 停止
+#sudo systemctl stop fail2ban.service
+# 重新啟動
+#sudo systemctl restart fail2ban.service
+# 重新載入設定（有修改 jail 內容時需執行)
+#sudo fail2ban-client reload
+# 查 jail 狀態
+#sudo fail2ban-client status
+# 查指定 jail 的狀態，例如 sshd
+#sudo fail2ban-client status sshd
+# 如果不小心封鎖到自己的IP
+#sudo fail2ban-client set sshd unbanip x.x.x.x
+# 時不時就檢查一下有多少IP被封鎖
+#sudo iptables -L -n
+
 # Print finish info
 echo "\n"
 echo "Ubuntu Nginx PHP MariaDB Certbot 環境已建製完成!!"
