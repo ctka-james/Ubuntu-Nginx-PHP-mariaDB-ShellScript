@@ -22,11 +22,11 @@ sudo sleep 3s
 sudo service ufw start
 sudo service ufw enable
 sudo ufw allow 'Nginx HTTP'
-sudo ufw allow 80/tcp
+# sudo ufw allow 80/tcp
 sudo ufw allow 'Nginx HTTPS'
-sudo ufw allow 443/tcp
-#sudo ufw allow 'SSH'
-sudo ufw allow 22/tcp
+# sudo ufw allow 443/tcp
+sudo ufw allow 'SSH'
+#sudo ufw allow 22/tcp
 #sudo ufw allow 873/tcp
 sudo ufw enable
 sudo ufw reload

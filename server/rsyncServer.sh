@@ -51,10 +51,14 @@ sudo chmod 600 /home/$USER/rsync.secret
 sudo chown root:root /home/$USER/rsync.secret
 sudo systemctl start rsync
 sudo systemctl enable rsync
-sudo ufw allow 873/tcp
-sudo ufw reload
 sudo systemctl restart rsync
 mkdir /home/$USER/dbBackup/
+
+# 開啟防火牆給特定ip
+# sudo ufw allow from 192.168.0.18 to any port rsync
+# sudo iptables -I INPUT -p TCP --dport 873 -j DROP
+# sudo iptables -I INPUT -s allowIP -p TCP --dport 873 -j ACCEPT
+
 # crontab allow user
 sudo cat << EOF > cron.allow
 $USER
