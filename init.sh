@@ -1,11 +1,11 @@
 #!/bin/bash
 sudo timedatectl set-timezone Asia/Taipei
 # clean cache and lock
-sudo lsb_release -a
-sudo sleep 5s
-sudo rm /var/lib/dpkg/lock-frontend
-sudo rm /var/lib/dpkg/lock
-sudo rm /var/cache/apt/archives/lock
+#sudo lsb_release -a
+#sudo sleep 5s
+#sudo rm /var/lib/dpkg/lock-frontend
+#sudo rm /var/lib/dpkg/lock
+#sudo rm /var/cache/apt/archives/lock
 sudo apt -y update
 #sudo apt -y upgrade
 #sudo apt install -y software-properties-common
@@ -25,7 +25,7 @@ sudo ufw allow 'Nginx HTTP'
 # sudo ufw allow 80/tcp
 sudo ufw allow 'Nginx HTTPS'
 # sudo ufw allow 443/tcp
-sudo ufw allow 'SSH'
+sudo ufw allow ssh
 #sudo ufw allow 22/tcp
 #sudo ufw allow 873/tcp
 sudo ufw enable
