@@ -74,7 +74,7 @@ sudo mysql_secure_installation
 sudo apt install -y plocate
 
 # install phpMyAdmin
-wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
+wget --no-check-certificate https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
 sudo unzip phpMyAdmin-5.2.0-all-languages.zip
 sudo mv phpMyAdmin-5.2.0-all-languages/ /var/www/phpMyAdmin
 sudo chmod -R +x /var/www/phpMyAdmin
