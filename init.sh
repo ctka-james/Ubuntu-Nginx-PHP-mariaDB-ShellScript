@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo timedatectl set-timezone Asia/Taipei
 # clean cache and lock
+##   sudo kill -9 $(jobs -p) 清除 Linux 中斷後的 stoped
 #sudo lsb_release -a
 #sudo sleep 5s
 #sudo rm /var/lib/dpkg/lock-frontend
