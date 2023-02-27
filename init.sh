@@ -7,9 +7,7 @@ sudo timedatectl set-timezone Asia/Taipei
 #sudo rm /var/lib/dpkg/lock-frontend
 #sudo rm /var/lib/dpkg/lock
 #sudo rm /var/cache/apt/archives/lock
-sudo apt -y update
-#sudo apt -y upgrade
-#sudo apt install -y software-properties-common
+
 sudo apt install -y zip
 sudo apt install -y net-tools
 
@@ -323,14 +321,16 @@ sudo nginx -s reload
 sudo chown www-data:adm /var/log/nginx/$1-access.log
 sudo chown www-data:adm /var/log/nginx/$1-error.log
 
-# # delete phpinfo.php
-# sudo rm /var/www/$1/phpinfo.php
-sudo apt remove unattended-upgrades
-
 # install fail2ban
 sudo apt install -y fail2ban
 sudo systemctl status fail2ban.service
 sudo sleep 3s
+
+# 更新套件
+sudo apt -y update
+sudo apt remove unattended-upgrades
+# sudo apt upgrade  # 更新核心套件
+
 # 啟動
 #sudo systemctl start fail2ban.service
 # 開機時啟動
