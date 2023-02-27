@@ -1,5 +1,10 @@
 #!/bin/bash
+# 設定時區
 sudo timedatectl set-timezone Asia/Taipei
+
+# 更新套件
+sudo apt -y update
+
 # clean cache and lock
 ##   sudo kill -9 $(jobs -p) 清除 Linux 中斷後的 stoped
 #sudo lsb_release -a
@@ -326,8 +331,7 @@ sudo apt install -y fail2ban
 sudo systemctl status fail2ban.service
 sudo sleep 3s
 
-# 更新套件
-sudo apt -y update
+# 暫停更新核心套件
 sudo apt remove unattended-upgrades
 # sudo apt upgrade  # 更新核心套件
 
