@@ -11,4 +11,8 @@ sudo journalctl --vacuum-time=3d
 sudo apt autoremove
 sudo apt autoclean
 sudo apt clean
+sudo apt list --upgradable
+echo "=========記憶體資訊========="
 sudo free -m
+echo "=========磁碟空間==========="
+sudo df -h
