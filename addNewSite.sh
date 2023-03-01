@@ -34,7 +34,13 @@ server {
         #   # 拒絕無法解析的 request 
         location ~ /\.ht {
             deny all;
-        } 
+        }
+        #
+        #   # WordPress 關閉 xmlrpc.php
+        # location = /xmlrpc.php{
+        #    deny all;
+        #    return 404;
+        # } 
 }
 EOF
 

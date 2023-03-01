@@ -39,7 +39,7 @@ sudo systemctl status ufw
 sudo sleep 3s
 
 # install PHP
-sudo apt install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl
+sudo apt install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl php-gd php-soap php-xmlrpc 
 
 # install imagick
 sudo apt install -y php8.1-imagick
@@ -121,7 +121,7 @@ server {
         #   # 拒絕無法解析的 request 
         location ~ /\.ht {
             deny all;
-        } 
+        }        
 }
 EOF
 
@@ -262,7 +262,13 @@ server {
         #   # 拒絕無法解析的 request 
         location ~ /\.ht {
             deny all;
-        } 
+        }
+        #
+        #   # WordPress 關閉 xmlrpc.php
+        # location = /xmlrpc.php{
+        #    deny all;
+        #    return 404;
+        # } 
 }
 EOF
 
