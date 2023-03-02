@@ -24,7 +24,7 @@ sudo df -h
 # sudo df -h        # 顯示磁碟各磁區容量
 # sudo vgdisplay    # 顯示磁碟狀況 Free PE 為可用容量
 
-# 100% 全部給
+# 100% 全部給會有點卡
 # sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
 
 # 給 50G     
@@ -36,3 +36,7 @@ sudo df -h
 # 重新檢視磁碟
 # df -h
 # sudo vgdisplay
+
+# 安裝 python3 pip
+# python3 --version
+# sudo apt install python3-pip
