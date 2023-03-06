@@ -20,6 +20,9 @@ sudo df -h
 # 查詢已安裝的套件
 # sudo dpkg --get-selections
 
+# 套件昇級
+# sudo apt upgrade
+
 # 擴充磁碟
 # sudo df -h        # 顯示磁碟各磁區容量
 # sudo vgdisplay    # 顯示磁碟狀況 Free PE 為可用容量

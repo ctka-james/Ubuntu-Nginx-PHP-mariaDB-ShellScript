@@ -7,11 +7,12 @@ sudo apt -y update
 
 # clean cache and lock
 ##   sudo kill -9 $(jobs -p) 清除 Linux 中斷後的 stoped
-#sudo lsb_release -a
-#sudo sleep 5s
-#sudo rm /var/lib/dpkg/lock-frontend
-#sudo rm /var/lib/dpkg/lock
-#sudo rm /var/cache/apt/archives/lock
+# sudo lsb_release -a
+# sudo sleep 5s
+# sudo rm -f /var/lib/dpkg/lock-frontend
+# sudo rm -f /var/lib/dpkg/lock
+# sudo rm -f /var/cache/apt/archives/lock
+# sudo killall apt
 
 sudo apt install -y zip
 sudo apt install -y net-tools
