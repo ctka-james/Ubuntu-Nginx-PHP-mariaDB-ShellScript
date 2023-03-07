@@ -4,13 +4,13 @@ sudo timedatectl set-timezone Asia/Taipei
 
 # clean cache and lock
 ##   sudo kill -9 $(jobs -p) 清除 Linux 中斷後的 stoped
-# sudo lsb_release -a
-# sudo sleep 5s
-# sudo rm -f /var/lib/dpkg/lock-frontend
-# sudo rm -f /var/lib/dpkg/lock
-# sudo rm -f /var/cache/apt/archives/lock
-# sudo rm -f /var/lib/apt/lists/lock
-# sudo killall apt apt-get
+sudo lsb_release -a
+sudo sleep 5s
+sudo rm -f /var/lib/dpkg/lock-frontend
+sudo rm -f /var/lib/dpkg/lock
+sudo rm -f /var/cache/apt/archives/lock
+sudo rm -f /var/lib/apt/lists/lock
+sudo killall apt apt-get
 
 # 昇級套件
 # sudo apt upgrade
@@ -18,7 +18,7 @@ sudo timedatectl set-timezone Asia/Taipei
 sudo apt update
 
 # 暫停更新核心套件
-# sudo apt remove unattended-upgrades
+sudo apt remove unattended-upgrades
 
 sudo apt install -y zip
 sudo apt install -y net-tools
