@@ -2,9 +2,6 @@
 # 設定時區
 sudo timedatectl set-timezone Asia/Taipei
 
-# 更新套件
-sudo apt -y update
-
 # clean cache and lock
 ##   sudo kill -9 $(jobs -p) 清除 Linux 中斷後的 stoped
 # sudo lsb_release -a
@@ -12,18 +9,29 @@ sudo apt -y update
 # sudo rm -f /var/lib/dpkg/lock-frontend
 # sudo rm -f /var/lib/dpkg/lock
 # sudo rm -f /var/cache/apt/archives/lock
-# sudo killall apt
+# sudo rm -f /var/lib/apt/lists/lock
+# sudo killall apt apt-get
+
+# 昇級套件
+# sudo apt upgrade
+# 更新套件
+sudo apt update
+
+# 暫停更新核心套件
+# sudo apt remove unattended-upgrades
 
 sudo apt install -y zip
 sudo apt install -y net-tools
 
 # Install Nginx
+sudo apt update
 sudo apt install -y nginx
 sudo systemctl enable --now nginx
 sudo systemctl status nginx
 sudo sleep 3s
 
 # firewall 設定
+sudo apt update
 sudo service ufw start
 sudo service ufw enable
 sudo ufw allow 'Nginx HTTP'
@@ -39,10 +47,12 @@ sudo ufw status
 sudo systemctl status ufw
 sudo sleep 3s
 
-# install PHP
-sudo apt install -y php8.1-cli php-fpm php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl php-gd php-soap php-xmlrpc 
+# install PHP modules
+sudo apt update
+sudo apt install -y php-fpm php8.1-cli php-mysqlnd php-mbstring php-json php-xml php-mysql php-zip php-curl php-intl php-gd php-soap php-xmlrpc 
 
 # install imagick
+sudo apt update
 sudo apt install -y php8.1-imagick
 sudo systemctl restart nginx php8.1-fpm.service
 sudo systemctl enable php8.1-fpm.service
@@ -50,6 +60,7 @@ sudo systemctl status php8.1-fpm.service
 sudo sleep 3s
 
 # install LetsEncrypt SSL certbot
+sudo apt update
 sudo apt install -y certbot python3-certbot-nginx
 sudo systemctl start certbot.timer
 sudo systemctl enable certbot.timer
@@ -57,6 +68,7 @@ sudo systemctl status certbot.timer
 sudo sleep 3s
 
 # install atd.service
+sudo apt update
 sudo apt install -y at
 sudo systemctl start atd.service
 sudo systemctl enable atd.service
@@ -69,6 +81,7 @@ sudo systemctl status atd.service
 sudo sleep 3s
 
 # install MariaDB
+sudo apt update
 sudo apt install -y mariadb-server
 sudo systemctl enable --now mariadb
 sudo systemctl status mariadb
@@ -76,6 +89,7 @@ sudo sleep 3s
 sudo mysql_secure_installation
 
 # install plocate
+sudo apt update
 sudo apt install -y plocate
 
 # install phpMyAdmin
@@ -340,7 +354,10 @@ sudo sleep 3s
 
 # 暫停更新核心套件
 sudo apt remove unattended-upgrades
-# sudo apt upgrade  # 更新核心套件
+# sudo apt upgrade # 更新核心套件
+
+# 關閉主機重啟時 cloud-init 警語
+sudo touch /etc/cloud/cloud-init.disabled
 
 # 啟動
 #sudo systemctl start fail2ban.service
